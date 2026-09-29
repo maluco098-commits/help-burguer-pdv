@@ -389,7 +389,7 @@ app.post('/api/whatsapp/webhook', asyncRoute(async (req, res) => {
   }
   res.sendStatus(200);
 }));
-const webBuildDir = path.resolve(process.cwd(), 'apps/web/dist');
+const webBuildDir = path.resolve(__dirname, '../../web/dist');
 app.use(express.static(webBuildDir));
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api/')) { next(); return; }
