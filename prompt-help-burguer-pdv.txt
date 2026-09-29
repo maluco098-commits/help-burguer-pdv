@@ -1,0 +1,578 @@
+PROMPT MESTRE — HELP BURGUER PDV
+================================================
+OBJETIVO
+Construir um sistema PDV (Ponto de Venda) REAL E FUNCIONAL para a lanchonete Help Burguer.
+Não criar apenas um protótipo visual. O sistema deve possuir frontend, backend, banco de dados,
+autenticação, persistência real, impressão térmica e integração com WhatsApp.
+
+O projeto deve rodar localmente no VS Code e estar preparado para produção.
+
+IDENTIDADE VISUAL
+- Marca: Help Burguer
+- Usar a logo fornecida em /assets/logo-help-burguer.png.
+- Estilo: moderno, premium, profissional, inspirado em hamburgueria na brasa.
+- Fundo predominante: preto/grafite.
+- Cor principal: dourado/amarelo.
+- Cor de destaque: vermelho para ações de alerta/cancelamento.
+- Verde para status online, caixa aberto e WhatsApp.
+- Interface responsiva para computador, notebook e tablet.
+- Evitar excesso de efeitos; priorizar velocidade e legibilidade.
+
+REFERÊNCIAS VISUAIS
+Os arquivos:
+- /assets/referencia-pdv-desktop-tablet.png
+- /assets/referencia-sistema-completo.png
+servem como referência de layout e identidade, mas não devem ser copiados literalmente.
+Criar uma interface original mantendo a mesma linguagem visual.
+
+STACK RECOMENDADA
+Frontend:
+- React + TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui ou componentes equivalentes
+- Lucide React para ícones
+- React Router
+- TanStack Query
+- React Hook Form + Zod
+
+Backend:
+- Node.js + TypeScript
+- NestJS ou Express bem estruturado
+- API REST
+- WebSocket/Socket.IO para alertas em tempo real
+
+Banco:
+- PostgreSQL
+- Prisma ORM
+- Migrações versionadas
+- Seed inicial com produtos da Help Burguer
+
+Autenticação:
+- Login com usuário e senha
+- Senhas com hash seguro
+- JWT + refresh token
+- Controle de permissões
+- Perfil inicial: CAIXA/OPERADOR e ADMIN
+
+ARQUITETURA
+Organizar o projeto de forma profissional, preferencialmente:
+/
+  apps/
+    web/
+    api/
+  packages/
+    shared/
+  prisma/
+  assets/
+  docs/
+
+Separar claramente frontend, backend, banco, componentes, serviços, validações e tipos.
+Criar .env.example e nunca colocar senhas ou tokens reais no código.
+
+TELA PRINCIPAL / VENDA
+Criar uma tela de venda rápida:
+- Menu lateral fixo/recolhível.
+- Logo no topo.
+- Botões:
+  1. Venda
+  2. Cardápio
+  3. Balanço de Caixa
+  4. Precificação
+  5. WhatsApp
+  6. Configurações
+- Indicador de caixa aberto/fechado.
+- Busca de produtos.
+- Categorias:
+  - Hambúrgueres
+  - Refrigerantes
+  - Adicionais
+  - Batatas
+  - Outros
+- Cards com foto, nome, descrição e preço.
+- Botão para adicionar ao pedido.
+- Carrinho/pedido atual no lado direito.
+- Alterar quantidade.
+- Remover item.
+- Adicionais por produto.
+- Observação do pedido.
+- Desconto, se autorizado.
+- Total calculado automaticamente.
+- Formas de pagamento:
+  - Dinheiro
+  - PIX
+  - Cartão
+- Tipos de atendimento:
+  - Balcão
+  - Delivery
+  - Mesa
+- Para delivery, coletar:
+  - Nome do cliente
+  - Telefone
+  - Endereço
+  - Número
+  - Bairro
+  - Complemento
+  - Referência
+- Finalizar pedido e gerar número único.
+
+DADOS INICIAIS DO CARDÁPIO
+Cadastrar no seed:
+
+Small — R$ 16,00
+- pão
+- salada
+- blend 150g
+- cheddar ou mussarela
+- molho da casa
+- SEM ovo
+
+Texas — R$ 19,00
+- pão
+- salada
+- blend 150g
+- cheddar ou mussarela
+- bacon
+- ovo
+- molho da casa
+
+Tropical — R$ 21,00
+- pão
+- salada
+- blend 150g
+- cheddar ou mussarela
+- bacon
+- abacaxi
+- molho da casa
+- SEM ovo
+
+Orion — R$ 23,00
+- pão
+- salada
+- blend 150g
+- cheddar ou mussarela
+- onion ring
+- molho de cream cheese
+- bacon
+- molho da casa
+- SEM ovo
+
+Americano — R$ 21,00
+- pão
+- salada
+- blend 150g
+- cheddar ou mussarela
+- bacon
+- calabresa
+- ovo
+- molho da casa
+
+Duplo — R$ 27,00
+- 2 blends de 150g
+- cheddar ou mussarela
+- bacon
+- calabresa
+- ovo
+- molho da casa
+IMPORTANTE: Duplo possui exatamente 2 carnes, não 3.
+
+COMBOS
+Os preços de combo são:
+- Small: R$ 31,00
+- Texas: R$ 34,00
+- Tropical: R$ 36,00
+- Orion: R$ 38,00
+- Americano: R$ 36,00
+- Duplo: R$ 42,00
+Combo inclui refrigerante lata 350 ml.
+Não mostrar texto "+ R$15". Mostrar diretamente o preço do combo.
+
+ADICIONAIS
+- Blend: R$ 6,00
+- Bacon: R$ 5,00
+- Ovo: R$ 3,00
+- Calabresa: R$ 3,00
+- Maionese: R$ 3,00
+- Batata porção: R$ 15,00
+- Refrigerante lata 350 ml: R$ 6,00
+- Delivery: R$ 3,00
+
+MÓDULO CARDÁPIO
+Permitir:
+- cadastrar produto
+- editar
+- excluir/desativar
+- alterar preço
+- alterar descrição
+- escolher categoria
+- enviar/trocar foto
+- cadastrar adicionais
+- cadastrar refrigerantes
+- cadastrar combos
+- ativar/desativar produto
+- ordenar produtos
+- controlar estoque opcionalmente
+
+BALANÇO DE CAIXA
+Criar dashboard com:
+- vendas de hoje
+- vendas da semana
+- vendas do mês
+- ticket médio
+- quantidade de pedidos
+- vendas por forma de pagamento
+- vendas por canal
+- produtos mais vendidos
+- gráfico por período
+- abertura de caixa
+- fechamento de caixa
+- sangria
+- suprimento
+- registro de gastos/despesas
+- descrição da despesa
+- categoria da despesa
+- valor
+- data/hora
+- usuário responsável
+- relatório diário, semanal e mensal
+- filtros por período
+- exportação CSV/PDF
+
+Não apagar vendas fechadas. Usar status e auditoria.
+
+MÓDULO DE PRECIFICAÇÃO
+Criar uma calculadora profissional de preço.
+
+Permitir cadastrar:
+- pão
+- carne/blend
+- queijo
+- bacon
+- calabresa
+- ovo
+- salada
+- molhos
+- embalagem
+- gás
+- energia
+- água
+- aluguel
+- taxas de cartão
+- perdas
+- mão de obra
+- outros custos
+
+Cada insumo deve ter:
+- nome
+- unidade de compra
+- quantidade comprada
+- preço de compra
+- rendimento
+- custo unitário
+- fornecedor opcional
+
+Para cada hambúrguer:
+- selecionar ingredientes
+- informar quantidade usada
+- calcular custo dos ingredientes
+- somar embalagem
+- somar custos indiretos configurados
+- informar margem/markup desejado
+- informar taxas
+- calcular preço sugerido
+
+Mostrar uma explicação profissional:
+- custo dos ingredientes
+- custos adicionais
+- custo total estimado
+- margem configurada
+- preço mínimo
+- preço sugerido
+- preço atual
+- diferença entre preço atual e sugerido
+- explicação textual automática do motivo do preço.
+
+Permitir simular cenários:
+- alteração no preço da carne
+- alteração no preço do bacon
+- alteração na margem
+- alteração de embalagem
+- alteração de taxas
+
+WHATSAPP
+Criar módulo visual chamado WhatsApp.
+
+IMPORTANTE:
+Não fingir que existe integração oficial se as credenciais/API não estiverem configuradas.
+Criar uma camada de integração desacoplada para permitir:
+- WhatsApp Cloud API oficial, ou
+- outro provedor compatível.
+
+Tela:
+- lista de conversas
+- pesquisa
+- mensagens
+- envio de texto
+- envio de imagem
+- envio de cardápio
+- botão para enviar rapidamente a foto do cardápio
+- respostas rápidas
+- informações do cliente
+- histórico de pedidos
+- status da conversa
+
+Salvar a imagem do cardápio no sistema e permitir enviar com um clique.
+
+ALERTA DE NOVA MENSAGEM/PEDIDO
+Quando chegar mensagem nova:
+- tocar alerta sonoro;
+- mostrar alerta visual grande;
+- mostrar badge no menu WhatsApp;
+- mostrar toast/notificação;
+- o alerta deve aparecer independentemente da tela atual do sistema;
+- se possível, usar WebSocket para atualização em tempo real;
+- permitir silenciar o som;
+- registrar data/hora;
+- não perder notificações.
+
+Se houver um novo pedido vindo de canal integrado:
+- destacar como NOVO PEDIDO;
+- tocar som diferente;
+- mostrar nome do cliente;
+- mostrar valor;
+- permitir abrir pedido diretamente.
+
+IMPRESSORA TÉRMICA
+Integrar com mini impressora térmica 58mm ou 80mm.
+
+Ao finalizar pedido, permitir:
+- imprimir automaticamente;
+- imprimir manualmente;
+- reimprimir;
+- selecionar impressora.
+
+A impressão deve conter no topo a logo da Help Burguer e:
+
+HELP BURGUER
+Número do pedido
+Data e hora
+Nome do cliente
+Telefone
+Tipo: Delivery/Balcão/Mesa
+
+Para delivery:
+Endereço completo
+Número
+Bairro
+Complemento
+Referência
+
+Itens:
+quantidade
+produto
+adicionais
+observações
+preço unitário
+subtotal
+
+Depois:
+Subtotal
+Desconto
+Taxa de entrega
+Total
+Forma de pagamento
+
+Rodapé:
+Obrigado pela preferência!
+HELP BURGUER
+
+Criar serviço de impressão separado do frontend para facilitar integração com impressoras térmicas.
+Quando a impressão direta não for suportada pelo navegador, criar uma solução local/desktop bridge ou serviço de impressão local, documentando claramente a instalação.
+
+PEDIDOS
+Criar estados:
+- aberto
+- confirmado
+- em preparo
+- pronto
+- saiu para entrega
+- entregue
+- cancelado
+
+Registrar histórico de mudanças.
+Criar tela de pedidos recentes.
+
+CONFIGURAÇÕES
+- dados da lanchonete
+- logo
+- telefone
+- endereço
+- impressora
+- largura do papel
+- som de alerta
+- volume
+- tempo de alerta
+- WhatsApp/API
+- usuários
+- permissões
+- métodos de pagamento
+- taxa de entrega
+- backup
+- preferências de impressão
+
+BANCO DE DADOS
+Criar modelos Prisma bem relacionados para:
+User
+Role
+Permission
+Product
+Category
+ProductImage
+Ingredient
+ProductIngredient
+Combo
+ComboItem
+Additional
+Customer
+Address
+Order
+OrderItem
+OrderItemAdditional
+Payment
+CashRegister
+CashMovement
+Expense
+Pricing
+PricingIngredient
+WhatsAppConversation
+WhatsAppMessage
+Notification
+Printer
+Setting
+AuditLog
+
+Usar UUID ou IDs robustos.
+Criar índices para consultas frequentes.
+Criar timestamps.
+Não apagar dados financeiros críticos fisicamente.
+
+SEGURANÇA
+- validar dados no backend;
+- autorização por função;
+- proteção contra acesso não autorizado;
+- sanitização de entradas;
+- rate limiting onde necessário;
+- logs;
+- variáveis sensíveis no .env;
+- backup do banco;
+- não salvar tokens do WhatsApp no frontend;
+- não confiar em valores enviados pelo cliente: recalcular preços no backend.
+
+RESPONSIVIDADE
+Desktop:
+sidebar + produtos + carrinho.
+
+Tablet:
+sidebar compacta + grid de produtos + carrinho adaptado.
+
+Celular:
+opcionalmente permitir consulta/gestão, mas priorizar desktop/tablet para PDV.
+
+EXPERIÊNCIA DE USO
+- poucos cliques para vender;
+- botões grandes;
+- atalhos de teclado;
+- busca rápida;
+- feedback visual;
+- loading states;
+- skeletons;
+- mensagens de erro claras;
+- confirmação antes de cancelar pedido;
+- não perder pedido se a tela atualizar.
+
+DADOS E CÁLCULOS
+Todos os valores monetários devem ser tratados com precisão decimal.
+Nunca usar floats de JavaScript diretamente para valores financeiros.
+Preferir Decimal no Prisma/backend e armazenar valores de forma segura.
+
+TESTES
+Criar:
+- testes unitários de cálculo de preço;
+- testes de criação/finalização de pedido;
+- testes de permissões;
+- testes de cálculo de totais;
+- testes de impressão;
+- testes de integração da API;
+- testes dos alertas em tempo real.
+
+SEED
+Criar seed com os produtos da Help Burguer e os preços acima.
+Usar fotos da pasta assets quando apropriado.
+
+README
+Criar documentação com:
+1. requisitos
+2. instalação
+3. configuração do .env
+4. criação do banco PostgreSQL
+5. migrations
+6. seed
+7. como iniciar frontend
+8. como iniciar backend
+9. como configurar WhatsApp
+10. como configurar impressora térmica
+11. como gerar build de produção
+12. backup e restauração
+13. usuários padrão de desenvolvimento
+
+DOCKER
+Criar docker-compose para:
+- PostgreSQL
+- backend
+- frontend quando apropriado
+
+Criar comandos simples:
+npm install
+npm run dev
+npm run db:migrate
+npm run db:seed
+npm run build
+npm run test
+
+REGRAS IMPORTANTES PARA A IA DO VS CODE
+1. Primeiro analisar a estrutura existente antes de modificar arquivos.
+2. Não apagar código funcional sem necessidade.
+3. Criar arquivos de forma organizada.
+4. Não criar apenas telas falsas.
+5. Implementar API e persistência real.
+6. Se alguma integração externa exigir credenciais, criar o adaptador e instruções, mas nunca inventar credenciais.
+7. Usar componentes reutilizáveis.
+8. Manter TypeScript estrito.
+9. Corrigir erros de compilação antes de finalizar cada etapa.
+10. Sempre informar quais arquivos foram criados/alterados.
+11. Implementar em etapas:
+   Etapa 1: estrutura + banco + autenticação
+   Etapa 2: cardápio + produtos
+   Etapa 3: tela de venda + pedidos
+   Etapa 4: caixa + despesas
+   Etapa 5: precificação
+   Etapa 6: impressão térmica
+   Etapa 7: WhatsApp + WebSocket + alertas
+   Etapa 8: relatórios
+   Etapa 9: testes + segurança + produção
+12. Depois de cada etapa, executar os testes/build e corrigir os problemas.
+13. Não considerar o projeto concluído enquanto o fluxo completo:
+   login → abrir caixa → montar pedido → finalizar → registrar pagamento →
+   salvar no banco → imprimir → aparecer no histórico
+   não estiver funcionando.
+
+PRIMEIRA TAREFA
+Antes de escrever código, faça uma análise do ambiente do projeto.
+Depois proponha a estrutura de pastas.
+Em seguida crie a base funcional e avance etapa por etapa.
+No final de cada etapa, mostre:
+- o que foi implementado;
+- arquivos criados;
+- arquivos alterados;
+- comandos executados;
+- pendências reais.
