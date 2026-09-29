@@ -3,7 +3,7 @@ services:
     name: help-burguer-pdv
     runtime: node
     plan: free
-    buildCommand: npm ci && npx prisma generate && npm run build
+    buildCommand: npm ci --include=dev && npx prisma generate && npm run build
     startCommand: npm run start:render
     healthCheckPath: /api/health
     envVars:
